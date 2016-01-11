@@ -45,9 +45,50 @@ var component = {
 
 // }
 
-function findComponentResistance(component) {
-	return component.resistance / 
+
+function calcTotalVoltage() {
+	var total = 0;
+	for (i = 0; i < componentArray.length; i++) {
+		if (componentArray[i].Voltage > 0) {
+			total += componentArray[i].Voltage;
+		}
+	}
+	return total;
 }
+
+function calcTotalResistance() {
+	var total = componentArray[0].resistance;
+	var component = componentArray[0.nextComponent];
+	while(component.nextComponent[0] != 0) {
+		total += component.resistance;
+		if (component.nextComponent.length > 1) {
+			total += findParallelCircuitResistance(component);
+			component = componentArray[component.nextComponent[0]];
+			while (component.parallelDepth != 0) {
+				component = componentArray[component.nextComponent[0]]; //move past this parallel loop til the next individual component
+			}
+			if (component.id = 0) {
+				return total;
+			}
+		}
+	}
+	return total;
+}
+
+//ideal: Start from depth 0 and recusrsively calculate resistance from there.
+
+// function findComponentResistance(component) {
+// 	var originalDepth;
+// 	while (componentArray[component.previousComponent[1]].parallelDepth  == originalDepth) { //find the first component on that branch
+// 		component = componentArray[component.previousComponent[1]];
+// 	}
+// 	resistance = component.resistance = findBranchResHelper(component);
+
+// 	while (component.parallelDepth > 0) {
+// 		findParallelCircuitResistance
+// 	}
+// 	findParallelCircuitResistance
+// }
 
 
 function findParallelCircuitResistance(component) {
