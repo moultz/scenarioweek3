@@ -2,7 +2,7 @@ circuits.js
 
 var componentCollection = [component {
 
-}]
+}]; //this will need a tidier function to sort objects into a list order to make them selectable and change the next and previous components to suit, eg if someone creates a load of components then deletes them it will throw the ids out of sync with the array index.
 
 var component = {
 	id : 1
@@ -14,42 +14,46 @@ var component = {
 	parallelDepth : 1
 }
 
-function calcResistance(component) {
-	var total = 0;
-	if (component.nextComponent.length > 1) {
-		for (i = 0; i < component.nextComponent.length; i++) {
-			total += 1/calcResistance(component.nextComponent[i]);
-		}
-		total = 1 / total;
-	}
-	return component.resistance;
-}
+// function calcResistance(component) {
+// 	var total = 0;
+// 	if (component.nextComponent.length > 1) {
+// 		for (i = 0; i < component.nextComponent.length; i++) {
+// 			total += 1/calcResistance(component.nextComponent[i]);
+// 		}
+// 		total = 1 / total;
+// 	}
+// 	return component.resistance;
+// }
 
 
-function calcResistance(component) {
-	var total = 0;
-	if (component.parallelDepth > 0) {
-		return component.resistance / findBranchResistance(component);
-	} else {
-		return component.resistance;
-	}
-}
+// function calcResistance(component) {
+// 	var total = 0;
+// 	if (component.parallelDepth > 0) {
+// 		return component.resistance / findBranchResistance(component);
+// 	} else {
+// 		return component.resistance;
+// 	}
+// }
 
-function findBranchResistance(component) {
-	var initialDepth = component.parallelDepth;
-	var firstComponentInBranch;
-	while (component.parallelDepth == initialDepth && initialDepth != 0) {
-		firstComponentInBranch = component.id;
-		component = componentArray[component.previousComponent];
-	}
+// function findBranchResistance(component) {
+// 	var initialDepth = component.parallelDepth;
+// 	var firstComponentInBranch;
+// 	while (component.parallelDepth == initialDepth && initialDepth != 0) {
+// 		firstComponentInBranch = component.id;
+// 		component = componentArray[component.previousComponent];
+// 	}
 
+// }
+
+function findComponentResistance(component) {
+	return component.resistance / 
 }
 
 
 function findParallelCircuitResistance(component) {
 	var total = 0;
 	for (i = 0; i < component.nextComponent.length; i++) {
-		total += findBranchResHelper(componentArray[component.nextComponent[i]]);
+		total += 1 / findBranchResHelper(componentArray[component.nextComponent[i]]);
 	}
 	return 1 / total;
 }
@@ -57,7 +61,7 @@ function findParallelCircuitResistance(component) {
 function findBranchResHelper(component) {
 	var originalDepth = component.parallelDepth;
 	var total = 0;
-	while (componentArray[component.nextComponent[0]].parallelDepth >= originalDepth) {
+	while (componentArray[component.nextComponent[0]].parallelDepth == originalDepth) {
 		total += component.resistance;
 		if (component.nextComponent.length > 1) {
 			total += findParallelCircuitResistance(component);
@@ -68,4 +72,5 @@ function findBranchResHelper(component) {
 			component = componentArray[component.nextComponent[0]];
 		}
 	}
+	return total;
 }
