@@ -75,6 +75,22 @@ function calcTotalResistance() {
 	return total;
 }
 
+function addVoltageDrops(voltageAvail, component) {
+	var branchResistance = findBranchResistance(component);
+	var initialDepth = component.parallelDepth;
+	while (component.parallelDepth >= initialDepth) {
+		component.Voltage = voltageAvail * component.resistance / branchResistance; // set the voltage for the component you're on
+		if (component.nextComponent.length > 1) {
+			addVoltageDrops(voltageAvail * findParallelCircuitResistance(component) / branchResistance);
+			while (component.parallelDepth > initialDepth) {
+				component = componentArray[component.nextComponent[0]];
+			}
+		} else {
+			component = componentArray[component.nextComponent[0]];
+		}
+	}
+}
+
 //ideal: Start from depth 0 and recusrsively calculate resistance from there.
 
 // function findComponentResistance(component) {
