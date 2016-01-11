@@ -1,3 +1,7 @@
-.btn-primary {
-    background-color: azure;
+.navbar {
+  margin-bottom: 0px;
+}
+
+.sidebar {
+  background-color: #f4f4f4
 }
