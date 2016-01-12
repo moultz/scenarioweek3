@@ -466,15 +466,20 @@
                 <a class="navbar-brand" href="#">Aschemer</a>
               </div>
 
+              <ul class="nav navbar-nav">
+                <li><a href="#">Simulate Board</a></li>
+              </ul>
+
               <!-- Right Navbar includes New, Open and Save, modals below-->
 
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="#newProjectModal" data-toggle="modal" data-target="#newProjectModal">New Project</a></li>
                   <li><a href="#openProjectModal" data-toggle="modal" data-target="#openProjectModal">Open Project</a></li>
-                  <li><a href="#saveProjectModal" data-toggle="modal" data-target="#saveProjectModal">Save</a></li>
+                  <li><a href="#">Save</a></li>
                 </ul>
 
                 <!-- Project Modals -->
+
                 <!-- New Project Modal -->
                 <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                   <div class="modal-dialog" role="document">
@@ -527,16 +532,41 @@
       </div>
       <div class="row">
         <div class="col-md-2 section sidebar components" id="left">
-          Col1 - Components
-        </div>
+          <h3>Components</h3>
+            9V Battery
+            <img src="img/9vbattery.png" alt="" width="100px;"/>
+            Button
+            <img src="img/switchbutton.png" alt="" width="100px;"/>
+            Resistor
+            <img src="img/resistor.png" alt="" width="100px;"/>
+            Switch
+            <img src="img/switchoff.png" alt="" width="100px;"/>
+            <br>
+            LED
+            <img src="img/diode.png" alt="" width="75px;"/>
+
+          <h3>Wire</h3>
+          <ul>
+            Wire
+            <svg width="100" height="5">
+  <rect width="100" height="5" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
+</svg>
+          </ul>
+          <h3>Simulating Tools</h3>
+          Voltmeter
+          <img src="img/voltmeter.png" alt="" width=50px;/>
+          <br>
+          Ammeter
+          <img src="img/ammeter.png" alt="" width="50px;" />
+        </div><!-- end of left sidebar -->
         <div class="col-md-8 section drawing-board" id="right">
-          Col2 - Drawing Board
+          <h3 align="center">Board</h3>
           <div style="width:400px; height:400px; border:solid thin #888; padding:10px; border-radius:4px; background-color:#ccc;" id="gfx_holder">
           </div>
 
         </div>
         <div class="col-md-2 section sidebar properties">
-          Col3 - Properties
+          <h3>Properties</h3>
         </div>
       </div>
     </div>
