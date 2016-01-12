@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hello World!</title>
 
+<script>window.$ = window.jQuery = require('./js/jquery-1.12.0.min.js');</script>
+
+
     <!-- Draw2d JS Dependencies -->
     <SCRIPT src="./draw2d/lib/shifty.js"></SCRIPT>
     <SCRIPT src="./draw2d/lib/raphael.js"></SCRIPT>
@@ -448,6 +451,24 @@
     <SCRIPT src="./draw2d/src/storage/LocalFileStorage.js"> </SCRIPT>
     <SCRIPT src="./draw2d/src/storage/TideSDKStorage.js"> </SCRIPT>
 
+
+
+    <SCRIPT src="./lib/jquery.browser.js"></SCRIPT>
+    <SCRIPT src="./lib/jquery-ui-1.8.23.custom.min.js"></SCRIPT>
+    <script src="lib/regex-colorizer.js"></script>
+    <SCRIPT src="./src/Application.js"></SCRIPT>
+    <SCRIPT src="./src/View.js"></SCRIPT>
+    <SCRIPT src="./src/backend/Backend_php.js"></SCRIPT>
+
+
+    <script type="text/javascript">
+        var app = null;
+        $(window).load(function () {
+                       app = new example.Application();
+                       });
+    </script>
+
+
     <!-- Latest compiled and minified Bootstrap CSS & JS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -456,8 +477,10 @@
     <link rel="stylesheet" href="css/custom.css">
 
   </head>
-  <body>
+  <body id="container">
     <div class="container-fluid">
+
+      <!-- Navbar Row -->
       <div class="row">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -530,44 +553,67 @@
             </div><!-- /.container-fluid -->
           </nav>
       </div>
+      <!--end of navbar-->
+
+      <!--Start of main 3-column layout -->
       <div class="row">
-        <div class="col-md-2 section sidebar components" id="left">
-          <h3>Components</h3>
-            9V Battery
-            <img src="img/9vbattery.png" alt="" width="100px;"/>
-            Button
-            <img src="img/switchbutton.png" alt="" width="100px;"/>
-            Resistor
-            <img src="img/resistor.png" alt="" width="100px;"/>
-            Switch
-            <img src="img/switchoff.png" alt="" width="100px;"/>
-            <br>
-            LED
-            <img src="img/diode.png" alt="" width="75px;"/>
+        <div id="content">
+          <!-- start of left sidebar editor-->
+            <div id="editor" class="">
+                <div class="col-md-2 section sidebar component">
+                  <div id="palette">
+                      <h3>Components</h3>
+                      <img src="img/End.png"        data-shape="draw2d.shape.state.End"     class="palette_node_element draw2d_droppable"></img>
+                      <br>
 
-          <h3>Wire</h3>
-          <ul>
-            Wire
-            <svg width="100" height="5">
-  <rect width="100" height="5" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
-</svg>
-          </ul>
-          <h3>Simulating Tools</h3>
-          Voltmeter
-          <img src="img/voltmeter.png" alt="" width=50px;/>
-          <br>
-          Ammeter
-          <img src="img/ammeter.png" alt="" width="50px;" />
-        </div><!-- end of left sidebar -->
-        <div class="col-md-8 section drawing-board" id="right">
-          <h3 align="center">Board</h3>
-          <div style="width:400px; height:400px; border:solid thin #888; padding:10px; border-radius:4px; background-color:#ccc;" id="gfx_holder">
-          </div>
+                      9V Battery
+                      <img src="img/9vbattery.png" alt="" width="100px;" data-shape="draw2d.shape.state.End" class="palette_node_element draw2d_droppable"/>
+                      Button
+                      <img src="img/switchbutton.png" alt="" width="100px;"/>
+                      Resistor
+                      <img src="img/resistor.png" alt="" width="100px;"/>
+                      Switch
+                      <img src="img/switchoff.png" alt="" width="100px;"/>
+                      <br>
+                      LED
+                      <img src="img/diode.png" alt="" width="75px;"/>
+
+                    <h3>Wire</h3>
+                    <ul>
+                      Wire
+                      <svg width="100" height="5">
+                        <rect width="100" height="5" style="fill:rgb(0,0,0);stroke-width:3;stroke:rgb(0,0,0)" />
+                      </svg>
+                    </ul>
+                    <h3>Simulating Tools</h3>
+                    Voltmeter
+                    <img src="img/voltmeter.png" alt="" width=50px;/>
+                    <br>
+                    Ammeter
+                    <img src="img/ammeter.png" alt="" width="50px;" />
+
+                  </div>
+                </div>
+            </div>
+          <!-- end of left sidebar editor -->
+
+
+                <div class="col-md-8">
+                  <div id="view">
+                      <div id="canvas"  style="width:800px; height:500px;-webkit-tap-highlight-color: rgba(0,0,0,0); background-color: red;"></div>
+                      <div id="property"></div>
+                  </div>
+                </div>
+
+                <div class="col-md-2 section sidebar properties">
+                  <h3>Properties</h3>
+                </div>
+
 
         </div>
-        <div class="col-md-2 section sidebar properties">
-          <h3>Properties</h3>
-        </div>
+
+      </div>
+
       </div>
     </div>
 
@@ -576,24 +622,5 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script>window.$ = window.jQuery = require('./js/jquery-1.12.0.min.js');</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-    <!-- draw2d script -->
-    <script>
-    var canvas = new draw2d.Canvas("gfx_holder");
-    var label =  new draw2d.shape.basic.Label({text:"Double Click on me"});
-
-      label.installEditor(new draw2d.ui.LabelEditor({
-         // called after the value has been set to the LabelFigure
-         onCommit: $.proxy(function(value){
-             alert("new value set to:"+value);
-         },this),
-         // called if the user abort the operation
-         onCancel: function(){
-         }
-      }));
-
-      canvas.add(label,50,10);
-
-    </script>
   </body>
 </html>
